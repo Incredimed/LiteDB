@@ -106,7 +106,18 @@ namespace LiteDB
 
             #region Register CustomTypes
 
-            RegisterType<Uri>(uri => uri.ToString(), bson => new Uri(bson.AsString, UriKind.Relative));
+            RegisterType<Uri>(uri => uri.ToString(), bson => {
+                if (Uri.TryCreate(bson.AsString, UriKind.Absolute, out var uriResult)
+                    //&& (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps)
+                    )
+                {
+                    return uriResult;
+                }
+                else
+                {
+                    return new Uri(bson.AsString, UriKind.Relative);
+                }
+            });
             RegisterType<DateTimeOffset>(value => new BsonValue(value.UtcDateTime), bson => bson.AsDateTime.ToUniversalTime());
             RegisterType<TimeSpan>(value => new BsonValue(value.Ticks), bson => new TimeSpan(bson.AsInt64));
             RegisterType<Regex>(
