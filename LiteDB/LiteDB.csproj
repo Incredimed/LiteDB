@@ -65,6 +65,11 @@
     <DefineConstants>NETSTANDARD20;HAVE_FLUSH_DISK;HAVE_SYNC_OVER_ASYNC;HAVE_LOCK;HAVE_TYPE_INFO;HAVE_EXPRESSION_ASSIGN;HAVE_TASK_DELAY;HAVE_ATTR_DEFINED</DefineConstants>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net35|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
   <ItemGroup Condition="'$(TargetFramework)' == 'net35' OR '$(TargetFramework)' == 'net40'">
     <Reference Include="System" />
   </ItemGroup>
